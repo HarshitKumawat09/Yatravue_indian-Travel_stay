@@ -1,0 +1,38 @@
+<% layout("/layouts/boilerplate") %>
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust</title>
+</head> -->
+
+<!-- <body> -->
+  <br/>
+    <h3>All Listings</h3>
+
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
+      <% for(let listing of allListings) { %>
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+          <div class="card col listing-card">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;" />            
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+              <p class="card-text">
+                <b><%= listing.title %></b> <br />
+                &#8377; <%= listing.price.toLocaleString("en-IN") %> /night
+              </p>
+            </div>
+          </div>
+        </a>
+          <% } %>
+    </div>
+
+    <!-- <form method = "GET" action="/listings/new">
+        <button>Create New Listing</button>
+    </form> -->
+    
+
+    
+<!-- </body> -->
+<!-- </html> -->
