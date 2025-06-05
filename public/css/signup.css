@@ -1,0 +1,75 @@
+.signup-container {
+  /* background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); */
+  
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  padding: 2.5rem 2rem 2rem 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  max-width: 450px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.3s ease;
+}
+.signup-container:hover {
+  transform: scale(1.02);
+}
+
+.signup-title {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #22223b;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 1px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #22223b;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-control {
+  border-radius: 0.75rem;
+  border: 1px solid #bfc0c0;
+  background: #f8f9fa;
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.form-control:focus {
+  border-color: #ff385c;
+  box-shadow: 0 0 0 0.2rem rgba(255,56,92,0.15);
+}
+
+.btn-success {
+  background: linear-gradient(90deg, #ff385c 0%, #f59d9d 100%);
+  border: none;
+  border-radius: 1.5rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0.7rem 2.5rem;
+  width: 100%;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-success:hover {
+  background: linear-gradient(90deg, #d34b4b 0%, #ff385c 100%);
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .signup-container {
+    padding: 1.5rem 0.5rem;
+    max-width: 98vw;
+  }
+  .signup-title {
+    font-size: 1.5rem;
+  }
+}

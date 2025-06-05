@@ -111,3 +111,125 @@ body {
   padding-left: 0;
   padding-right: 0;
 }
+
+/* Dark Mode Global Background */
+body.dark-mode {
+  background-color: #18191a !important;
+  color: #f1f1f1 !important;
+}
+
+/* Navbar Styling */
+.dark-mode .navbar,
+.dark-mode .navbar-brand,
+.dark-mode .nav-link {
+  background-color: #121212;
+  color: #f1f1f1 !important;
+}
+
+.dark-mode .navbar-brand:hover,
+.dark-mode .nav-link:hover {
+  color: #ff385c !important;
+}
+
+/* Footer Styling */
+.dark-mode .f-info {
+  background-color: #1f1f1f;
+  color: #f1f1f1;
+  border-top: 1px solid #333;
+}
+
+.dark-mode .f-info-brand,
+.dark-mode .f-info-links a {
+  color: #cccccc !important;
+  transition: color 0.2s ease-in-out;
+}
+
+.dark-mode .f-info-links a:hover {
+  color: #ff385c !important;
+}
+
+/* Card and Listing Elements */
+.dark-mode .card,
+.dark-mode .card-body,
+.dark-mode .card-title,
+.dark-mode .card-text,
+.dark-mode .listing-link {
+  background-color: #18191a !important;
+  color: #f1f1f1 !important;
+  /* border: 1px solid #121212 !important; */
+}
+
+/* Form Labels and Controls */
+.dark-mode .form-label  {
+  color: #f1f1f1 !important;
+}
+
+.dark-mode .form-control {
+  background-color: #2c2f35 !important;
+  color: #fff !important;
+  border: 1px solid #444 !important;
+}
+
+.dark-mode .form-control::placeholder {
+  color: #aaa !important;
+}
+
+.dark-mode .form-control:focus {
+  border-color: #ff385c !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 56, 92, 0.3) !important;
+}
+
+/* Buttons */
+.dark-mode .btn-success,
+.dark-mode .btn-dark,
+.dark-mode .btn-search,
+.dark-mode .add-btn,
+.dark-mode .edit-btn {
+  background-color: #ff385c !important;
+  color: #ffffff !important;
+  border: none !important;
+  transition: background 0.3s ease;
+}
+
+.dark-mode .btn-success:hover,
+.dark-mode .btn-dark:hover,
+.dark-mode .btn-search:hover,
+.dark-mode .add-btn:hover,
+.dark-mode .edit-btn:hover {
+  background-color: #e03150 !important;
+}
+
+/* Font Awesome & Icon Coloring */
+.dark-mode .fa-solid,
+.dark-mode .fa-regular,
+.dark-mode .fa-moon,
+.dark-mode .fa-sun,
+.dark-mode .fa-magnifying-glass,
+.dark-mode .fa-compass {
+  color: #f1f1f1 !important;
+  transition: color 0.3s ease;
+}
+
+/* Optional: Add hover effect for icons */
+.dark-mode .fa:hover {
+  color: #ff385c !important;
+  cursor: pointer;
+}
+/* Make signup and login cards white in dark mode */
+.dark-mode .signup-title {
+  color: #e9e9f0 !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+}
+
+.dark-mode .btn-outline-dark {
+  color: #f1f1f1;
+  border-color: #f1f1f1;
+  background-color: transparent;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.dark-mode .btn-outline-dark:hover {
+  background-color: #f1f1f1;
+  color: #121212;
+  border-color: #f1f1f1;
+}
