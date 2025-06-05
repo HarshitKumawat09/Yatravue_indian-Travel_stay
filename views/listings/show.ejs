@@ -35,7 +35,45 @@
       <i class="fa-solid fa-suitcase-rolling"></i> Add to Itinerary
     </button>
   </form>
-<% } %>
+
+  <!-- Reserve Button and Modal START -->
+            <button id="reserveBtn" class="reserve-btn mb-3">Reserve</button>
+            <div id="reserveModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <!-- Add this inside .modal-content, before your form -->
+<span id="currentUsername" data-username="<%= currUser.username %>" style="display:none"></span>
+                    <h5>Reserve this Listing</h5>
+                    <form id="reservationForm" data-price="<%= listing.price %>" data-title="<%= listing.title %>">
+                        <label>Check-in: <input type="date" name="checkIn" required class="form-control mb-2"></label>
+                        <label>Check-out: <input type="date" name="checkOut" required class="form-control mb-2"></label>
+                        <label>Guests: <input type="number" name="guests" min="1" value="1" required class="form-control mb-2"></label>
+                        <button type="submit" class="pay-btn" id="proceedToPaymentBtn">Proceed to Payment</button>
+                    </form>
+                    <div id="paymentStep" style="display:none;">
+                        <h6>Payment Summary</h6>
+                        <p>Base Amount: ₹<span id="baseAmount"></span></p>
+                        <p>GST (18%): ₹<span id="taxAmount"></span></p>
+                        <p><b>Total: ₹<span id="totalAmount"></span></b></p>
+                        <button class="pay-btn" id="confirmPayBtn">Confirm & Pay</button>
+                    </div>
+                    <!-- Receipt Section START -->
+                    <div id="receiptContainer" style="display:none;">
+                        <h5 class="text-center mb-2">ToursPackeges.com</h5>
+                        <pre id="receiptContent" style="white-space: pre-wrap; background: #f8f9fa; padding: 1em; border-radius: 8px;"></pre>
+                        <div class="d-flex justify-content-between mt-3">
+                            <button class="pay-btn" id="downloadBtn">Download Receipt</button>
+                            <button class="pay-btn" id="printBtn">Print Receipt</button>
+                            <button class="pay-btn" id="shareBtn">Share Receipt</button>
+                        </div>
+                    </div>
+                    <!-- Receipt Section END -->
+                </div>
+            </div>
+            <!-- Reserve Button and Modal END -->
+        <% } else { %>
+        <a href="/login" class="reserve-btn mb-3">Login to Reserve</a>
+        <% } %>
         </div>
     </div>
     <br />
@@ -105,9 +143,15 @@
             </div>
         <% } %>
     </div>
+    
+    
 
     </div>
 </div>
+<link rel="stylesheet" href="/css/booking.css">
+<script src="/js/booking.js"></script>
+
+
 <!-- </body> -->
 <!-- </html> -->
  <!-- <ul>
