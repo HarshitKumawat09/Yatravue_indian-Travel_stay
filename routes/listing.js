@@ -21,6 +21,7 @@ const validateListing = (req, res, next) => {
     }
 };
 
+
 //Index route..
 router.get("/", wrapAsync(listingController.index));
 
