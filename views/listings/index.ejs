@@ -91,6 +91,56 @@
       </div>
     </div>
 
+    <!-- Floating Calculator Icon -->
+<button id="openTripCalc" class="btn btn-success trip-calc-fab" title="Open Trip Calculator">
+  <i class="fa-solid fa-calculator fa-2x"></i>
+</button>
+
+<!-- Trip Calculator Modal -->
+<div class="modal fade" id="tripCalcModal" tabindex="-1" aria-labelledby="tripCalcModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="tripCalcModalLabel">Trip Calculator</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="tripCalcForm">
+          <div class="mb-2">
+            <label for="nights" class="form-label">Number of Nights</label>
+            <input type="number" id="nights" class="form-control" value="1" min="1">
+          </div>
+          <div class="mb-2">
+            <label for="guests" class="form-label">Number of Guests</label>
+            <input type="number" id="guests" class="form-control" value="1" min="1">
+          </div>
+          
+          <div class="mb-2">
+            <label for="price" class="form-label">Price per Night (₹)</label>
+            <input type="number" id="price" class="form-control" value="2000" min="1">
+          </div>
+          <div class="mb-2">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" id="startDate" class="form-control">
+          </div>
+          <button type="button" class="btn btn-success w-100" onclick="calculateTrip()">Calculate Total</button>
+        </form>
+        <div class="d-flex align-items-center justify-content-between mt-3">
+          <span class="fw-bold">Total (incl. 18% GST):</span>
+          <span id="tripTotal" class="fw-bold text-success" style="font-size:1.3rem;">
+            ₹0
+          </span>
+        </div>
+        <div class="d-flex flex-wrap gap-2 my-2">
+  <div id="priceBadge"></div>
+  <div id="seasonAlert"></div>
+  <div id="discountMsg"></div>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
     </div>
     
 
@@ -126,6 +176,140 @@
         }
     });
     </script>
+
+
+<!-- <script>
+document.getElementById('openTripCalc').addEventListener('click', function() {
+  var modal = new bootstrap.Modal(document.getElementById('tripCalcModal'));
+  modal.show();
+});
+
+function calculateTrip() {
+  const nights = parseInt(document.getElementById('nights').value) || 1;
+  const guests = parseInt(document.getElementById('guests').value) || 1;
+  const pricePerNight = parseInt(document.getElementById('price').value) || 0;
+  const subtotal = pricePerNight * nights;
+  const tax = subtotal * 0.18; // 12% tax
+  const total = subtotal + tax;
+  document.getElementById('tripTotal').innerText = `₹${total.toLocaleString("en-IN")}`;
+}
+</script> -->
+
+<script>
+let averagePrice = Math.floor(Math.random() * (2500 - 1500 + 1)) + 1500;
+
+const peakSeasons = [
+  { start: "2025-12-20", end: "2026-01-05", name: "New Year" },
+  { start: "2025-10-15", end: "2025-10-25", name: "Festival Season" },
+  { start: "2025-05-01", end: "2025-06-30", name: "Summer Holidays" },
+  { start: "2025-08-10", end: "2025-08-20", name: "Independence Week" },
+  { start: "2025-03-20", end: "2025-03-28", name: "Spring Break" }
+];
+
+
+document.getElementById('openTripCalc').addEventListener('click', function() {
+  // Randomize average price each time modal opens
+  averagePrice = Math.floor(Math.random() * (2500 - 1500 + 1)) + 1500;
+  if(document.getElementById('avgPriceVal')) {
+    document.getElementById('avgPriceVal').innerText = averagePrice;
+  }
+  var modal = new bootstrap.Modal(document.getElementById('tripCalcModal'));
+  modal.show();
+});
+
+function isPeakSeason(startDate, nights) {
+  if (!startDate) return null;
+  const start = new Date(startDate);
+  for (const season of peakSeasons) {
+    const seasonStart = new Date(season.start);
+    const seasonEnd = new Date(season.end);
+    for (let i = 0; i < nights; i++) {
+      const tripDate = new Date(start);
+      tripDate.setDate(tripDate.getDate() + i);
+      if (tripDate >= seasonStart && tripDate <= seasonEnd) {
+        return season.name;
+      }
+    }
+  }
+  return null;
+}
+
+function calculateTrip() {
+  const nights = parseInt(document.getElementById('nights').value) || 1;
+  const guests = parseInt(document.getElementById('guests').value) || 1;
+  const pricePerNightBase = parseInt(document.getElementById('price').value) || 0;
+  const startDateInput = document.getElementById('startDate');
+  const startDate = startDateInput ? startDateInput.value : null;
+
+  // Require start date
+  if (!startDate) {
+    alert("Please select a start date.");
+    return;
+  }
+
+  // Price per night increases by ₹300 for each guest after the first
+  const pricePerNight = pricePerNightBase + (guests > 1 ? (guests - 1) * 300 : 0);
+
+  const subtotal = pricePerNight * nights;
+  const tax = subtotal * 0.18; // 18% GST
+
+  // Dynamic Discount
+  let discount = 0;
+  let discountMsg = "";
+  if (nights >= 4) {
+    discount = 0.10 * (subtotal + tax);
+    discountMsg = `<span class="badge bg-info text-dark">You unlocked a 10% discount for 4+ nights!</span>`;
+  }
+
+  const total = subtotal + tax - discount;
+  document.getElementById('tripTotal').innerText = `₹${total.toLocaleString("en-IN")}`;
+
+  // Price Comparison Badge
+  let priceBadge = "";
+  if (pricePerNight > averagePrice) {
+    priceBadge = `<span class="badge bg-warning text-dark">Prices are higher than usual for these dates!</span>`;
+  } else if (pricePerNight < averagePrice) {
+    priceBadge = `<span class="badge bg-success">Great deal! Prices are lower than usual.</span>`;
+  } else {
+    priceBadge = `<span class="badge bg-secondary">This is the average price.</span>`;
+  }
+
+  // Seasonal Price Alert
+  const season = isPeakSeason(startDate, nights);
+  let seasonAlert = "";
+  if (season) {
+    seasonAlert = `<span class="badge bg-danger">Peak Season (${season}): Prices may be higher.</span>`;
+  }
+
+  // Collect all possible messages
+const messages = [priceBadge, seasonAlert, discountMsg].filter(msg => msg);
+
+// Shuffle and pick two random messages
+function getRandomMessages(arr, n) {
+  let shuffled = arr.slice();
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, n);
+}
+
+const randomMessages = getRandomMessages(messages, 2);
+
+// Clear all
+if (document.getElementById('priceBadge')) document.getElementById('priceBadge').innerHTML = "";
+if (document.getElementById('seasonAlert')) document.getElementById('seasonAlert').innerHTML = "";
+if (document.getElementById('discountMsg')) document.getElementById('discountMsg').innerHTML = "";
+
+// Show the two random messages in any two containers
+if (randomMessages[0] && document.getElementById('priceBadge')) {
+  document.getElementById('priceBadge').innerHTML = randomMessages[0];
+}
+if (randomMessages[1] && document.getElementById('seasonAlert')) {
+  document.getElementById('seasonAlert').innerHTML = randomMessages[1];
+}
+}
+</script>
 
     <!-- <form method = "GET" action="/listings/new">
         <button>Create New Listing</button>
