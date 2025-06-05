@@ -233,3 +233,53 @@ body.dark-mode {
   color: #121212;
   border-color: #f1f1f1;
 }
+
+.trip-calc-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 1050;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  font-size: 1.5rem;
+}
+.trip-calc-fab i {
+  margin: 0;
+}
+
+.dark-mode .modal-content {
+  background: #23272f !important;
+  color: #f1f1f1 !important;
+}
+
+.dark-mode .modal-header,
+.dark-mode .modal-body {
+  background: #23272f !important;
+  color: #f1f1f1 !important;
+}
+
+.dark-mode .form-label,
+.dark-mode .modal-title {
+  color: #f1f1f1 !important;
+}
+
+.dark-mode .form-control {
+  background: #18191a !important;
+  color: #f1f1f1 !important;
+  border-color: #444 !important;
+}
+
+.dark-mode .form-control:focus {
+  background: #23272f !important;
+  color: #fff !important;
+  border-color: #ff385c !important;
+}
+
+
+#priceBadge:empty, #seasonAlert:empty, #discountMsg:empty { display: none; }
+#priceBadge .badge, #seasonAlert .badge, #discountMsg .badge { font-size: 1rem; margin-right: 0.5rem; }
