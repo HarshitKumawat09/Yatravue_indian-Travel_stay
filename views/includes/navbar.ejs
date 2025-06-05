@@ -18,6 +18,22 @@
   padding: 0.5rem 3rem 0.5rem 3rem;
   font-size: 1rem;
 }
+/* Dark mode toggle button style */
+  #darkModeToggle {
+    display: inline;
+    margin-right: 18rem;
+    margin-top: 0.3rem;
+    border-radius: 25px;
+    background: #23272f;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.2rem;
+    transition: background 0.2s;
+  }
+  #darkModeToggle:hover {
+    background: #444950;
+    color: #fff;
+  }
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
@@ -38,7 +54,11 @@
       <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
     </form>
         </div>
-        <div class="navbar-nav ms-auto">
+        <div class="navbar-nav ms-auto align-items-center">
+        <button id="darkModeToggle" class="btn btn-dark" style="position: fixed; top: 1rem; right: 1rem; z-index: 9999;">
+  <i class="fa-solid fa-moon"></i> Dark Mode
+</button>
+        
           <a class="nav-link" href="/listings/new">Airbnb your home</a>
           <% if(!currUser){ %>
           <a class="nav-link"  href="/signup"><b>Sign Up</b></a>
@@ -50,3 +70,31 @@
       </div>
     </div>
   </nav>
+
+  <script>
+  // Enable dark mode if previously set
+  if (localStorage.getItem('darkMode') === 'enabled') {
+    document.body.classList.add('dark-mode');
+  }
+
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  if (darkModeToggle) {
+    darkModeToggle.addEventListener('click', function() {
+      document.body.classList.toggle('dark-mode');
+      if (document.body.classList.contains('dark-mode')) {
+        localStorage.setItem('darkMode', 'enabled');
+        darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
+      } else {
+        localStorage.setItem('darkMode', 'disabled');
+        darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
+      }
+    });
+
+    // Set correct icon/text on load
+    if (document.body.classList.contains('dark-mode')) {
+      darkModeToggle.innerHTML = '<i class="fa-solid fa-sun"></i> Light Mode';
+    } else {
+      darkModeToggle.innerHTML = '<i class="fa-solid fa-moon"></i> Dark Mode';
+    }
+  }
+</script>
