@@ -1,4 +1,4 @@
-# Yatravue
+#🚀🚀 Yatravue
 
 **Yatravue** is a modern, India-rooted travel and stay booking platform built to solve a real and overlooked problem—**the lack of a unified, high-quality system for discovering and booking authentic Indian stays and experiences**.
 
@@ -122,4 +122,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 🌏 Made with ❤️ for travelers, by travelers — **Yatravue**
+## 🌏 Made with ❤️ for travelers — **Yatravue**
