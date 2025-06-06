@@ -11,8 +11,6 @@ With a bold design, powerful features, and AI-enhanced support, **Yatravue is yo
 
 ## ✨ Features
 
-## ✨ Features
-
 - **Beautiful Listings:**  
   Browse and view detailed listings with images, descriptions, prices, and locations.
 
