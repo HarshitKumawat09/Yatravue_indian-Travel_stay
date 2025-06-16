@@ -1,3 +1,4 @@
+
 <style>
   .btn-search {
   background-color: #fe424d;
@@ -35,11 +36,35 @@
     background: #444950;
     color: #fff;
   }
+  .brand-name {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: 2px;
+  color: #fe424d;
+  margin-left: 0.5rem;
+  font-optical-sizing: auto;
+  font-style: normal;
+  text-shadow: 0 2px 8px rgba(254,66,77,0.08);
+  transition: color 0.2s;
+}
+.brand-name.pacifico-regular {
+  font-family: "Pacifico", cursive;
+  font-size: 2.2rem;
+  font-weight: 400;
+  font-style: normal;
+  color: #fe424d;
+  text-shadow: 1px 2px 8px rgba(254,66,77,0.12), 0 0 1px #fe424d;
+  letter-spacing: 1px;
+}
+.brand-name:hover {
+  color: #d86783;
+}
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i><span class="brand-name pacifico-regular">YatraVue</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -60,7 +85,7 @@
   <i class="fa-solid fa-moon"></i> Dark Mode
 </button>
         
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
+          <a class="nav-link" href="/listings/new">YatraVue your stay</a>
           <% if(!currUser){ %>
           <a class="nav-link"  href="/signup"><b>Sign Up</b></a>
           <a class="nav-link" href="/login"><b>Login</b></a>

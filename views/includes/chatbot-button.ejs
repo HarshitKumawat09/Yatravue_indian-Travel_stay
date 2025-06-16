@@ -1,0 +1,69 @@
+<!-- Floating Chatbot Button -->
+<style>
+  #chatbot-btn {
+    position: fixed;
+    left: 30px;
+    bottom: 40px;
+    z-index: 9999;
+    background: #fe424d;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #chatbot-window {
+    display: none;
+    position: fixed;
+    left: 100px;
+    bottom: 110px;
+    width: 350px;
+    height: 500px;
+    background: #fff;
+    border-radius: 1em;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+    z-index: 10000;
+    overflow: hidden;
+    flex-direction: column;
+  }
+  @media (prefers-color-scheme: dark) {
+    #chatbot-btn {
+      background: #ff66a3;
+      color: #181b20;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    #chatbot-btn:hover {
+      background: #fe424d;
+      color: #fff;
+    }
+    #chatbot-window {
+      background: #181b20;
+      color: #f1f1f1;
+      border: 1px solid #333;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.5);
+    }
+    #chatbot-window iframe {
+      background: #181b20;
+      color-scheme: dark;
+    }
+  }
+</style>
+<button id="chatbot-btn" title="Chat with AI">
+  <i class="fa-solid fa-robot"></i>
+</button>
+<div id="chatbot-window">
+  <iframe src="/chatbot" width="100%" height="100%" frameborder="0"></iframe>
+</div>
+<script>
+  const btn = document.getElementById('chatbot-btn');
+  const win = document.getElementById('chatbot-window');
+  btn.onclick = () => {
+    win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
+  };
+</script>
