@@ -1,0 +1,264 @@
+<!-- YatraVue AI Chatbot UI -->
+<style>
+  .yv-chatbot-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    background: linear-gradient(135deg, #fff 0%, #ffe6ea 100%);
+    border-radius: 1em;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+    overflow: hidden;
+    position: relative;
+  }
+  .yv-chatbot-header {
+    background: #fe424d;
+    color: #fff;
+    padding: 1em;
+    text-align: center;
+    font-size: 1.3em;
+    font-family: "Pacifico", cursive;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    border-bottom: 1px solid #f8bfc7;
+  }
+  .yv-chatbot-header i {
+    font-size: 1.5em;
+  }
+  .yv-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1em;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7em;
+  }
+  .yv-msg {
+    max-width: 80%;
+    padding: 0.7em 1em;
+    border-radius: 1.2em;
+    font-size: 1em;
+    line-height: 1.5;
+    word-break: break-word;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    margin-bottom: 0.2em;
+    display: inline-block;
+  }
+  .yv-msg-user {
+    align-self: flex-end;
+    background: #fe424d;
+    color: #fff;
+    border-bottom-right-radius: 0.3em;
+  }
+  .yv-msg-ai {
+    align-self: flex-start;
+    background: #f8bfc7;
+    color: #222;
+    border-bottom-left-radius: 0.3em;
+  }
+  .yv-chatbot-form {
+    display: flex;
+    border-top: 1px solid #f8bfc7;
+    background: #fff;
+    padding: 0.7em;
+    gap: 0.5em;
+  }
+  .yv-chatbot-input {
+    flex: 1;
+    padding: 0.6em 1em;
+    border: 1px solid #fe424d;
+    border-radius: 2em;
+    outline: none;
+    font-size: 1em;
+    background: #fff;
+    transition: border 0.2s;
+  }
+  .yv-chatbot-input:focus {
+    border: 2px solid #fe424d;
+  }
+  .yv-chatbot-send {
+    background: #fe424d;
+    color: #fff;
+    border: none;
+    border-radius: 2em;
+    padding: 0.6em 1.5em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .yv-chatbot-send:hover {
+    background: #ff3366;
+  }
+  @media (prefers-color-scheme: dark) {
+  .yv-chatbot-container {
+    background: linear-gradient(135deg, #181b20 0%, #2a2326 100%);
+    color: #f1f1f1;
+  }
+  .yv-chatbot-header {
+    background: #ff66a3;
+    color: #181b20;
+    border-bottom: 1px solid #333;
+  }
+  .yv-chat-messages {
+    background: #181b20 !important;
+  }
+  .yv-msg-user {
+    background: #ff66a3;
+    color: #181b20;
+  }
+  .yv-msg-ai {
+    background: #2a2326;
+    color: #f1f1f1;
+  }
+  .yv-chatbot-form {
+    background: #181b20;
+    border-top: 1px solid #333;
+  }
+  .yv-chatbot-input {
+    background: #2a2326;
+    color: #f1f1f1;
+    border: 1px solid #ff66a3;
+  }
+  .yv-chatbot-send {
+    background: #ff66a3;
+    color: #181b20;
+  }
+  .yv-chatbot-send:hover {
+    background: #fe424d;
+    color: #fff;
+  }
+  /* Suggestion area and buttons in dark mode */
+  .yv-chat-messages > div {
+    background: #181b20 !important;
+    color: #f1f1f1 !important;
+  }
+  .yv-chat-messages button {
+    background: #2a2326 !important;
+    color: #ff66a3 !important;
+    border: 1px solid #ff66a3 !important;
+  }
+  .yv-chat-messages button:hover {
+    background: #ff66a3 !important;
+    color: #181b20 !important;
+  }
+}
+</style>
+<div class="yv-chatbot-container">
+  <div class="yv-chatbot-header">
+    <i class="fa-solid fa-robot"></i>
+    YatraVue AI Chat
+  </div>
+  <div id="chat-messages" class="yv-chat-messages"></div>
+  <form id="chat-form" class="yv-chatbot-form" autocomplete="off">
+    <input id="chat-input" class="yv-chatbot-input" type="text" placeholder="Ask YatraVue anything..." autocomplete="off" />
+    <button type="submit" class="yv-chatbot-send">Send</button>
+  </form>
+</div>
+<script>
+  const form = document.getElementById('chat-form');
+  const input = document.getElementById('chat-input');
+  const messages = document.getElementById('chat-messages');
+
+  let userName = localStorage.getItem('yatravueUserName') || null;
+  let askedName = false;
+
+  const suggestions = [
+    "How do I make a booking?",
+    "I didn't receive my booking receipt.",
+    "My listing is not created.",
+    "I have a payment related issue.",
+    "How do I contact support?",
+    "How do I become a host?",
+    "How do I add my property?",
+    "Can I cancel or modify a booking?",
+    "Is there a mobile app?",
+    "Do you offer itinerary planning?",
+    "How do I enable dark mode?",
+    "What is YatraVue?"
+  ];
+
+  function addMsg(text, sender) {
+    const div = document.createElement('div');
+    div.className = 'yv-msg ' + (sender === 'user' ? 'yv-msg-user' : 'yv-msg-ai');
+    div.innerHTML = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function showSuggestions() {
+    const sugDiv = document.createElement('div');
+    sugDiv.style.marginTop = "1em";
+    sugDiv.innerHTML = `<div style="margin-bottom:0.5em;font-weight:600;">Quick Questions:</div>`;
+    suggestions.forEach(q => {
+      const btn = document.createElement('button');
+      btn.type = "button";
+      btn.textContent = q;
+      btn.style.margin = "0.2em";
+      btn.style.padding = "0.4em 1em";
+      btn.style.borderRadius = "1em";
+      btn.style.border = "1px solid #fe424d";
+      btn.style.background = "#fff";
+      btn.style.color = "#fe424d";
+      btn.style.cursor = "pointer";
+      btn.onclick = () => {
+        input.value = q;
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+      };
+      sugDiv.appendChild(btn);
+    });
+    messages.appendChild(sugDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function greet() {
+    addMsg(`👋 Hi! Welcome to <b>YatraVue AI Chat</b>.<br>I'm here to help you with bookings, listings, payments, and more.<br><br>May I know your name?`, 'ai');
+    askedName = true;
+    showSuggestions();
+  }
+
+  window.onload = () => {
+    messages.innerHTML = '';
+    if (!userName) {
+      greet();
+    } else {
+      addMsg(`👋 Welcome back, <b>${userName}</b>! How can I assist you today?`, 'ai');
+      showSuggestions();
+    }
+  };
+
+  form.onsubmit = async (e) => {
+    e.preventDefault();
+    const userMsg = input.value.trim();
+    if (!userMsg) return;
+    addMsg(`<b>${userName || "You"}:</b> ${userMsg}`, 'user');
+    input.value = '';
+    messages.scrollTop = messages.scrollHeight;
+
+    if (!userName && askedName) {
+      userName = userMsg.split(' ')[0];
+      localStorage.setItem('yatravueUserName', userName);
+      addMsg(`Nice to meet you, <b>${userName}</b>! How can I help you today?`, 'ai');
+      showSuggestions();
+      askedName = false;
+      return;
+    }
+
+    addMsg('<i class="fa fa-spinner fa-spin"></i> <span>YatraVue is typing...</span>', 'ai');
+
+    setTimeout(async () => {
+      const res = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: userMsg, name: userName })
+      });
+      const data = await res.json();
+      const typing = messages.querySelector('.fa-spinner')?.parentElement;
+      if (typing) typing.remove();
+      addMsg(`<b>YatraVue:</b> ${data.reply}`, 'ai');
+    }, 1000);
+  };
+</script>
