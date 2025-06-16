@@ -109,8 +109,21 @@ With a bold design, powerful features, and AI-enhanced support, **Yatravue is yo
 ---
 
 ## 📸 Screenshots
+![Screenshot 2025-06-16 193343](https://github.com/user-attachments/assets/67fdc846-971d-492e-93eb-68602dc899f4)
 
-> _Add screenshots of your homepage, listing page, reservation modal, receipt, and chatbot here for extra appeal!_
+![Screenshot 2025-06-16 193511](https://github.com/user-attachments/assets/87b65fe2-d1cf-4412-865a-6a416db7b9a7)
+
+![Screenshot 2025-06-16 193649](https://github.com/user-attachments/assets/b1efea4b-e1eb-4fdc-b57b-c0e2f6825dea)
+
+![Screenshot 2025-06-16 193809](https://github.com/user-attachments/assets/51acd221-36a6-4bbd-a5f8-7952f79d8453)
+
+![Screenshot 2025-06-16 195538](https://github.com/user-attachments/assets/5f05ddd1-b3f5-4738-9a96-61abbd5a5cc7)
+
+![Screenshot 2025-06-16 195626](https://github.com/user-attachments/assets/4797daf6-6538-4cd4-95b0-1ad5adfb87b1)
+
+![Screenshot 2025-06-16 195229](https://github.com/user-attachments/assets/1c78022b-01f8-40ef-bff5-b80d464eb16f)
+
+![Screenshot 2025-06-16 195436](https://github.com/user-attachments/assets/d6b73a1d-136c-4711-8123-b744fcc89c4c)
 
 ---
 
