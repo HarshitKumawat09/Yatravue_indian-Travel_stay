@@ -21,6 +21,39 @@ const validateListing = (req, res, next) => {
     }
 };
 
+// Helper function (top of file or before routes)
+async function geocodeAddress(address) {
+  const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  if (data && data.length > 0) {
+    return { lat: parseFloat(data[0].lat), lon: parseFloat(data[0].lon) };
+  }
+  return null;
+}
+
+// POST /listings (Create Listing)
+router.post('/listings', async (req, res) => {
+  const coords = await geocodeAddress(req.body.location);
+  const newListing = new Listing({
+    ...req.body,
+    latitude: coords ? coords.lat : undefined,
+    longitude: coords ? coords.lon : undefined
+  });
+  await newListing.save();
+  res.redirect(`/listings/${newListing._id}`);
+});
+
+// PUT /listings/:id (Update Listing)
+router.put('/listings/:id', async (req, res) => {
+  const coords = await geocodeAddress(req.body.location);
+  await Listing.findByIdAndUpdate(req.params.id, {
+    ...req.body,
+    latitude: coords ? coords.lat : undefined,
+    longitude: coords ? coords.lon : undefined
+  });
+  res.redirect(`/listings/${req.params.id}`);
+});
 
 //Index route..
 router.get("/", wrapAsync(listingController.index));
