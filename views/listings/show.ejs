@@ -57,9 +57,20 @@
                         <p><b>Total: ₹<span id="totalAmount"></span></b></p>
                         <button class="pay-btn" id="confirmPayBtn">Confirm & Pay</button>
                     </div>
+                    <!-- Payment Method Step -->
+<div id="paymentMethodStep" style="display:none;">
+  <h6>Select Payment Method</h6>
+  <form id="paymentMethodForm">
+    <label><input type="radio" name="paymentMethod" value="Credit/Debit Card" checked> Credit/Debit Card</label><br>
+    <label><input type="radio" name="paymentMethod" value="UPI"> UPI</label><br>
+    <label><input type="radio" name="paymentMethod" value="Netbanking"> Netbanking</label><br>
+    <label><input type="radio" name="paymentMethod" value="Wallet"> Wallet</label><br>
+    <button type="submit" class="pay-btn" id="payNowBtn">Pay Now</button>
+  </form>
+</div>
                     <!-- Receipt Section START -->
                     <div id="receiptContainer" style="display:none;">
-                        <h5 class="text-center mb-2">ToursPackeges.com</h5>
+                        <h5 class="text-center mb-2">Yatravue.com</h5>
                         <pre id="receiptContent" style="white-space: pre-wrap; background: #f8f9fa; padding: 1em; border-radius: 8px;"></pre>
                         <div class="d-flex justify-content-between mt-3">
                             <button class="pay-btn" id="downloadBtn">Download Receipt</button>
@@ -143,7 +154,13 @@
             </div>
         <% } %>
     </div>
-    
+    <h3>Location</h3>
+<div id="map" class="listing-map"></div>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!-- Leaflet Control Geocoder CSS & JS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     
 
     </div>
@@ -151,6 +168,33 @@
 <link rel="stylesheet" href="/css/booking.css">
 <script src="/js/booking.js"></script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var lat = 28.6139; // Default: Delhi
+    var lon = 77.2090;
+    var map = L.map('map').setView([lat, lon], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var marker = L.marker([lat, lon]).addTo(map)
+      .bindPopup('<b>Delhi, India</b>').openPopup();
+
+    // Add geocoder control
+    L.Control.geocoder({
+      defaultMarkGeocode: false
+    })
+    .on('markgeocode', function(e) {
+      var center = e.geocode.center;
+      map.setView(center, 13);
+      marker.setLatLng(center)
+        .setPopupContent('<b>' + e.geocode.name + '</b>')
+        .openPopup();
+    })
+    .addTo(map);
+  });
+</script>
 
 <!-- </body> -->
 <!-- </html> -->
