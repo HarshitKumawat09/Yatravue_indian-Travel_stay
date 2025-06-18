@@ -161,14 +161,16 @@
 <!-- Leaflet Control Geocoder CSS & JS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
     </div>
 </div>
 <link rel="stylesheet" href="/css/booking.css">
 <script src="/js/booking.js"></script>
 
-<script>
+<!-- <script>
   document.addEventListener('DOMContentLoaded', function() {
     var lat = 28.6139; // Default: Delhi
     var lon = 77.2090;
@@ -191,6 +193,84 @@
       marker.setLatLng(center)
         .setPopupContent('<b>' + e.geocode.name + '</b>')
         .openPopup();
+    })
+    .addTo(map);
+  });
+</script> -->
+
+<!-- <style>
+  .listing-map {
+    height: 400px;
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 32px;
+    min-height: 300px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+</style> -->
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var defaultLat = 28.6139; // Delhi
+    var defaultLon = 77.2090;
+    var map = L.map('map').setView([defaultLat, defaultLon], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    var currentLatLng = [defaultLat, defaultLon];
+    var currentMarker = L.marker(currentLatLng, {title: "Your Location"}).addTo(map)
+      .bindPopup("Default Location (Delhi)").openPopup();
+    var destMarker, line;
+
+    // Try to get user's current location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        currentLatLng = [position.coords.latitude, position.coords.longitude];
+        map.setView(currentLatLng, 12);
+        currentMarker.setLatLng(currentLatLng)
+          .setPopupContent("Your Location").openPopup();
+      });
+    }
+
+    var routingControl;
+
+
+    // Add geocoder (search box)
+    L.Control.geocoder({
+      defaultMarkGeocode: false
+    })
+    .on('markgeocode', function(e) {
+      var destLatLng = e.geocode.center;
+
+
+      
+      // Remove previous destination marker and line
+      if (destMarker) map.removeLayer(destMarker);
+      if (line) map.removeLayer(line);
+
+      // Add destination marker
+      destMarker = L.marker(destLatLng, {title: e.geocode.name}).addTo(map)
+        .bindPopup("Destination: " + e.geocode.name).openPopup();
+
+      // Draw line from current location to destination
+      if (currentLatLng) {
+        line = L.polyline([currentLatLng, destLatLng], {color: 'blue', weight: 4}).addTo(map);
+
+        // Calculate distance (in km)
+        var distance = map.distance(currentLatLng, destLatLng) / 1000;
+        // Show distance as a popup at the midpoint
+        var midLat = (currentLatLng[0] + destLatLng.lat) / 2;
+        var midLng = (currentLatLng[1] + destLatLng.lng) / 2;
+        L.popup()
+          .setLatLng([midLat, midLng])
+          .setContent("Distance: " + distance.toFixed(2) + " km")
+          .openOn(map);
+      }
+      map.fitBounds([currentLatLng, destLatLng], {padding: [50, 50]});
     })
     .addTo(map);
   });
