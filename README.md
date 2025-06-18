@@ -47,7 +47,7 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
 - **Responsive Design:**  
   Enjoy a seamless experience on desktop, tablet, and mobile.
 
----
+-----
 
 ## 🚀 Tech Stack
 
@@ -57,7 +57,7 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
 - **AI:** OpenAI GPT-3.5 (for chatbot)
 - **Other:** Font Awesome, Google Fonts
 
----
+-----
 
 ## 🛠️ Setup & Installation
 
@@ -87,7 +87,7 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
    ```
    The app will be available at [http://localhost:3000](http://localhost:3000).
 
----
+-----
 
 ## 💡 Unique Highlights
 
@@ -106,7 +106,7 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
 - **Dark Mode:**  
   One-click dark mode toggle, with persistent user preference.
 
----
+-----
 
 ## 📸 Screenshots
 ![Screenshot 2025-06-16 193343](https://github.com/user-attachments/assets/67fdc846-971d-492e-93eb-68602dc899f4)
@@ -125,14 +125,14 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
 
 ![Screenshot 2025-06-16 195436](https://github.com/user-attachments/assets/d6b73a1d-136c-4711-8123-b744fcc89c4c)
 
----
+-----
 
----
+-----
 
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
----
+-----
 
 ## 🌏 Made with ❤️ for travelers — **YatraVue**
