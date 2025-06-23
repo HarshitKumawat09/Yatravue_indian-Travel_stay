@@ -116,6 +116,10 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
 
 ![Screenshot 2025-06-22 000731](https://github.com/user-attachments/assets/c234374c-bc2d-4010-8ee8-120e27fcc34c)
 
+![Screenshot 2025-06-23 182856](https://github.com/user-attachments/assets/e7325916-554f-4143-b68a-f2f3bccc72f9)
+
+![Screenshot 2025-06-23 000412](https://github.com/user-attachments/assets/d38cc2ba-91b4-4e9d-8964-2abc8161772c)
+
 ![Screenshot 2025-06-22 001307](https://github.com/user-attachments/assets/4d1b42a8-5c92-4e11-8493-ad2d429adb10)
 
 ![Screenshot 2025-06-22 001249](https://github.com/user-attachments/assets/bbaa9602-d423-476f-94d6-7334b700193d)
