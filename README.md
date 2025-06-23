@@ -112,17 +112,21 @@ With a bold design, powerful features, and AI-enhanced support, **YatraVue is yo
 
 ![Screenshot 2025-06-22 235849](https://github.com/user-attachments/assets/be5065b6-5e6f-45cc-9f7a-78a897db9fd5)
 
-![Screenshot 2025-06-16 193511](https://github.com/user-attachments/assets/87b65fe2-d1cf-4412-865a-6a416db7b9a7)
+![Screenshot 2025-06-22 000833](https://github.com/user-attachments/assets/ede80a24-3ba5-4df9-b501-708680021f2e)
 
-![Screenshot 2025-06-16 193649](https://github.com/user-attachments/assets/b1efea4b-e1eb-4fdc-b57b-c0e2f6825dea)
+![Screenshot 2025-06-22 000731](https://github.com/user-attachments/assets/c234374c-bc2d-4010-8ee8-120e27fcc34c)
 
-![Screenshot 2025-06-16 193809](https://github.com/user-attachments/assets/51acd221-36a6-4bbd-a5f8-7952f79d8453)
+![Screenshot 2025-06-22 001307](https://github.com/user-attachments/assets/4d1b42a8-5c92-4e11-8493-ad2d429adb10)
+
+![Screenshot 2025-06-22 001249](https://github.com/user-attachments/assets/bbaa9602-d423-476f-94d6-7334b700193d)
 
 ![Screenshot 2025-06-16 195538](https://github.com/user-attachments/assets/5f05ddd1-b3f5-4738-9a96-61abbd5a5cc7)
 
 ![Screenshot 2025-06-16 195626](https://github.com/user-attachments/assets/4797daf6-6538-4cd4-95b0-1ad5adfb87b1)
 
-![Screenshot 2025-06-16 195229](https://github.com/user-attachments/assets/1c78022b-01f8-40ef-bff5-b80d464eb16f)
+![Screenshot 2025-06-22 001357](https://github.com/user-attachments/assets/dd57f961-b0f9-4b72-9eaf-388987ae0dd8)
+
+![Screenshot 2025-06-22 000805](https://github.com/user-attachments/assets/aebc841d-bfdf-46e4-9cf4-e31f1f8cd99a)
 
 ![Screenshot 2025-06-16 195436](https://github.com/user-attachments/assets/d6b73a1d-136c-4711-8123-b744fcc89c4c)
 
