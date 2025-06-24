@@ -1,8 +1,7 @@
 
-
 <!-- views/itinerary/comingsoon.ejs -->
 
-<style>
+<!-- <style>
 .coming-soon-3d {
       margin: 5rem auto;
       padding: 3rem 2rem;
@@ -104,4 +103,819 @@
   <h1>Coming Soon!</h1>
   <p>We're working on something exciting. This feature will be available in a future update.</p>
   <a href="/listings" class="btn btn-primary mt-3">Back to Listings</a>
+</div> -->
+
+<%- include('../includes/head') %>
+<%- include('../includes/navbar') %>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+<link rel="stylesheet" href="/styles/itinerary.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<div class="planner-container">
+  <!-- Sidebar -->
+  <aside class="trip-sidebar">
+    <h2>Trip Overview</h2>
+    <div class="days-list" id="daysList"></div>
+    <div class="day-summary" id="daySummary"></div>
+    <div class="trip-summary" id="tripSummary"></div>
+    <button class="add-day-btn add-day-main-btn">+ Add Day</button>
+    <button class="add-day-btn download-json-btn" style="margin-top:1rem;background:#232526;">
+      <i class="fa-solid fa-download"></i> Download JSON
+    </button>
+    <button class="add-day-btn download-pdf-btn" style="margin-top:0.5rem;background:#ffd166;color:#232526;">
+      <i class="fa-solid fa-file-pdf"></i> Download PDF
+    </button>
+  </aside>
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="itinerary-header">
+      <h2 id="currentDayTitle">Day 1 Itinerary</h2>
+      <span class="desc" id="currentDayDesc">Plan your authentic Indian experiences for this day</span>
+    </div>
+    <div class="itinerary-list" id="itineraryList"></div>
+    <button class="add-day-btn add-item-btn" style="width: fit-content;">+ Add Item</button>
+  </main>
 </div>
+
+<!-- Modal for adding item -->
+<div id="itemModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1000;background:rgba(0,0,0,0.25);align-items:center;justify-content:center;">
+  <form id="itemForm" style="background:#fff;padding:2rem 2.5rem;border-radius:1.2rem;box-shadow:0 8px 32px rgba(254,66,77,0.13);min-width:320px;max-width:95vw;display:flex;flex-direction:column;gap:1rem;position:relative;">
+    <button type="button" onclick="closeModal()" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.3rem;color:#fe424d;cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+    <h3 style="margin:0 0 1rem 0;color:#fe424d;">Add Itinerary Item</h3>
+    <label>Title <input name="title" required style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <label>FontAwesome Icon <input name="icon" placeholder="fa-map-marker-alt" style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <label>Rating <input name="rating" type="number" step="0.1" max="5" min="0" placeholder="4.5" style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <label>Location <input name="location" required style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <label>Description <textarea name="desc" required style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></textarea></label>
+    <label>Time <input name="time" required placeholder="10:00 AM" style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <label>Duration <input name="duration" required placeholder="2 hours" style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <label>Price <input name="price" required placeholder="₹500" style="width:100%;padding:0.5rem;border-radius:0.5rem;border:1px solid #eee;"></label>
+    <button type="submit" class="add-day-btn" style="margin-top:1rem;">Save Item</button>
+  </form>
+</div>
+
+<script>
+let days = [
+  { name: "Day 1", items: [] }
+];
+let currentDay = 0;
+
+function renderDays() {
+  const daysList = document.getElementById('daysList');
+  daysList.innerHTML = '';
+  days.forEach((day, idx) => {
+    const div = document.createElement('div');
+    div.className = 'day-tab' + (idx === currentDay ? ' active' : '');
+    div.innerHTML = `<i class="fa-solid fa-calendar-day"></i> ${day.name} <span style="margin-left:auto;font-size:0.9rem;color:#fe424d;background:#fffbe6;border-radius:0.5rem;padding:0 0.5rem;">${day.items.length}</span>`;
+    div.addEventListener('click', () => { currentDay = idx; renderAll(); });
+    daysList.appendChild(div);
+  });
+}
+
+function renderItinerary() {
+  const list = document.getElementById('itineraryList');
+  list.innerHTML = '';
+  days[currentDay].items.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.className = 'itinerary-card';
+    card.innerHTML = `
+      <div class="itinerary-icon"><i class="fa-solid ${item.icon}"></i></div>
+      <div class="itinerary-details">
+        <div class="itinerary-title">
+          ${item.title}
+          <span class="star"><i class="fa-solid fa-star"></i> ${item.rating}</span>
+        </div>
+        <div class="itinerary-location"><i class="fa-solid fa-location-dot"></i> ${item.location}</div>
+        <div class="itinerary-desc">${item.desc}</div>
+        <div class="itinerary-meta">
+          <span class="meta-badge time"><i class="fa-regular fa-clock"></i> ${item.time}</span>
+          <span class="meta-badge time"><i class="fa-solid fa-hourglass-half"></i> ${item.duration}</span>
+          <span class="meta-badge price"><i class="fa-solid fa-indian-rupee-sign"></i> ${item.price}</span>
+        </div>
+        <div class="itinerary-actions">
+          <button class="edit-btn" data-idx="${idx}"><i class="fa-solid fa-pen"></i> Edit</button>
+          <button class="save-btn" data-idx="${idx}"><i class="fa-regular fa-heart"></i> Save</button>
+        </div>
+      </div>
+      <button class="delete-btn" data-idx="${idx}"><i class="fa-solid fa-trash"></i></button>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function renderSummary() {
+  const summary = document.getElementById('tripSummary');
+  let totalItems = days.reduce((sum, d) => sum + d.items.length, 0);
+  let totalCost = days.reduce((sum, d) => sum + d.items.reduce((s, i) => {
+    let p = parseInt((i.price||'').replace(/[^\d]/g, ''));
+    return s + (isNaN(p) ? 0 : p);
+  }, 0), 0);
+  summary.innerHTML = `
+    <div><strong>All Days Total Items:</strong> ${totalItems}</div>
+    <div><strong>All Days Estimated Cost:</strong> ₹${totalCost}</div>
+  `;
+
+  const daySummary = document.getElementById('daySummary');
+  let dayItems = days[currentDay].items.length;
+  let dayCost = days[currentDay].items.reduce((s, i) => {
+    let p = parseInt((i.price||'').replace(/[^\d]/g, ''));
+    return s + (isNaN(p) ? 0 : p);
+  }, 0);
+  daySummary.innerHTML = `
+    <div><strong>${days[currentDay].name} Items:</strong> ${dayItems}</div>
+    <div><strong>${days[currentDay].name} Estimated Cost:</strong> ₹${dayCost}</div>
+  `;
+}
+
+function renderAll() {
+  renderDays();
+  renderItinerary();
+  renderSummary();
+  document.getElementById('currentDayTitle').textContent = days[currentDay].name + " Itinerary";
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  renderAll();
+
+  // Add Day
+  document.querySelector('.add-day-main-btn')?.addEventListener('click', addDay);
+  // Add Item
+  document.querySelector('.add-item-btn')?.addEventListener('click', addItem);
+  // Download JSON
+  document.querySelector('.download-json-btn')?.addEventListener('click', downloadItinerary);
+  // Download PDF
+  document.querySelector('.download-pdf-btn')?.addEventListener('click', downloadPDF);
+  // Modal close button
+  document.querySelector('#itemModal button[type="button"]')?.addEventListener('click', closeModal);
+
+  // Modal form submit
+  document.getElementById('itemForm').onsubmit = function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const item = {
+      title: form.title.value,
+      icon: form.icon.value || "fa-map-marker-alt",
+      rating: form.rating.value || "4.5",
+      location: form.location.value,
+      desc: form.desc.value,
+      time: form.time.value,
+      duration: form.duration.value,
+      price: form.price.value
+    };
+    if (form.dataset.editIdx) {
+      days[currentDay].items[parseInt(form.dataset.editIdx)] = item;
+    } else {
+      days[currentDay].items.push(item);
+    }
+    closeModal();
+    renderAll();
+  };
+
+  // Itinerary list actions (edit/delete/save)
+  document.getElementById('itineraryList').addEventListener('click', function(e) {
+    const editBtn = e.target.closest('.edit-btn');
+    const deleteBtn = e.target.closest('.delete-btn');
+    const saveBtn = e.target.closest('.save-btn');
+    if (editBtn) {
+      const idx = editBtn.dataset.idx;
+      const item = days[currentDay].items[idx];
+      const form = document.getElementById('itemForm');
+      form.title.value = item.title;
+      form.icon.value = item.icon;
+      form.rating.value = item.rating;
+      form.location.value = item.location;
+      form.desc.value = item.desc;
+      form.time.value = item.time;
+      form.duration.value = item.duration;
+      form.price.value = item.price;
+      form.dataset.editIdx = idx;
+      document.getElementById('itemModal').style.display = 'flex';
+    } else if (deleteBtn) {
+      const idx = deleteBtn.dataset.idx;
+      if (confirm("Delete this item?")) {
+        days[currentDay].items.splice(idx, 1);
+        renderAll();
+      }
+    } else if (saveBtn) {
+      alert('Saved to favorites!');
+    }
+  });
+});
+
+function addDay() {
+  const name = prompt("Enter day name:", `Day ${days.length + 1}`);
+  if (!name) return;
+  days.push({ name, items: [] });
+  currentDay = days.length - 1;
+  renderAll();
+}
+
+function addItem() {
+  const form = document.getElementById('itemForm');
+  form.reset();
+  form.dataset.editIdx = '';
+  document.getElementById('itemModal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('itemModal').style.display = 'none';
+}
+
+function downloadItinerary() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(days, null, 2));
+  const dlAnchor = document.createElement('a');
+  dlAnchor.setAttribute("href", dataStr);
+  dlAnchor.setAttribute("download", "itinerary.json");
+  document.body.appendChild(dlAnchor);
+  dlAnchor.click();
+  dlAnchor.remove();
+}
+
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  let y = 10;
+  doc.setFontSize(18);
+  doc.text("YatraVue Trip Itinerary", 10, y);
+  y += 10;
+  days.forEach((day, dIdx) => {
+    doc.setFontSize(14);
+    doc.text(`${day.name}`, 10, y);
+    y += 8;
+    day.items.forEach((item, iIdx) => {
+      doc.setFontSize(11);
+      doc.text(`- ${item.title} (${item.time}, ${item.duration})`, 12, y);
+      y += 6;
+      doc.text(`  Location: ${item.location} | Price: ${item.price} | Rating: ${item.rating}`, 14, y);
+      y += 6;
+      doc.text(`  ${item.desc}`, 14, y);
+      y += 8;
+      if (y > 270) { doc.addPage(); y = 10; }
+    });
+    y += 4;
+  });
+  doc.save("itinerary.pdf");
+}
+</script>
+
+
+<style>
+:root {
+  --primary: #fe424d;
+  --primary-dark: #232526;
+  --accent: #ffd166;
+  --background: #fff8f0;
+  --sidebar-bg: linear-gradient(135deg, #fff 60%, #ffe0e0 100%);
+  --card-bg: #fff;
+  --card-shadow: 0 8px 32px rgba(254,66,77,0.13);
+  --border-radius: 1.2rem;
+  --text-dark: #232526;
+  --text-light: #fff;
+  --muted: #bdbdbd;
+}
+
+/* Layout */
+body {
+  background: var(--background);
+  font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+  color: var(--text-dark);
+  margin: 0;
+  padding: 0;
+}
+
+.planner-container {
+  display: flex;
+  max-width: 1200px;
+  margin: 3rem auto;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  min-height: 600px;
+}
+
+/* Sidebar */
+.trip-sidebar {
+  background: var(--sidebar-bg);
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  min-width: 270px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  border-right: 2px solid #ffe0e0;
+}
+
+.trip-sidebar h2 {
+  color: var(--primary);
+  font-size: 1.6rem;
+  margin-bottom: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.days-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.day-tab {
+  background: #fff;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 500;
+  font-size: 1.08rem;
+  color: var(--primary-dark);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border 0.2s, background 0.2s;
+}
+
+.day-tab.active, .day-tab:hover {
+  border: 2px solid var(--primary);
+  background: #fff6f7;
+  color: var(--primary);
+}
+
+.day-summary, .trip-summary {
+  background: #fffbe6;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 8px #ffd16622;
+}
+
+.add-day-btn {
+  background: var(--primary);
+  color: var(--text-light);
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  margin-top: 0.3rem;
+  box-shadow: 0 2px 8px #fe424d22;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.add-day-btn:hover, .add-day-btn:focus {
+  background: var(--accent);
+  color: var(--primary-dark);
+  box-shadow: 0 4px 16px #ffd16655;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  background: #fff;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.itinerary-header h2 {
+  color: var(--primary-dark);
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+  font-weight: 700;
+}
+
+.itinerary-header .desc {
+  color: var(--muted);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.itinerary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.3rem;
+  margin: 1.5rem 0 2rem 0;
+}
+
+/* Itinerary Card */
+.itinerary-card {
+  display: flex;
+  align-items: flex-start;
+  background: #fff8f0;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px #ffd16633;
+  padding: 1.2rem 1.5rem;
+  gap: 1.2rem;
+  position: relative;
+  border-left: 6px solid var(--primary);
+  transition: box-shadow 0.2s, border 0.2s;
+}
+
+.itinerary-card:hover {
+  box-shadow: 0 6px 24px #fe424d22;
+  border-left: 6px solid var(--accent);
+}
+
+.itinerary-icon {
+  font-size: 2.2rem;
+  color: var(--primary);
+  margin-top: 0.2rem;
+  min-width: 2.5rem;
+}
+
+.itinerary-details {
+  flex: 1;
+}
+
+.itinerary-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.itinerary-title .star {
+  color: #ffd166;
+  font-size: 1rem;
+  margin-left: 0.7rem;
+  font-weight: 500;
+}
+
+.itinerary-location {
+  color: var(--primary);
+  font-size: 1.05rem;
+  margin: 0.2rem 0 0.5rem 0;
+}
+
+.itinerary-desc {
+  color: #444;
+  font-size: 1.05rem;
+  margin-bottom: 0.7rem;
+}
+
+.itinerary-meta {
+  display: flex;
+  gap: 1.2rem;
+  margin-bottom: 0.7rem;
+}
+
+.meta-badge {
+  background: #fffbe6;
+  color: var(--primary-dark);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.98rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.meta-badge.price {
+  background: #ffe0e0;
+  color: var(--primary);
+}
+
+.itinerary-actions {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.edit-btn, .save-btn {
+  background: #fff;
+  color: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.9rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.edit-btn:hover, .save-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.delete-btn {
+  background: #fff;
+  color: #fe424d;
+  border: 1.5px solid #fe424d;
+  border-radius: 0.5rem;
+  padding: 0.3rem 0.7rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.delete-btn:hover {
+  background: #fe424d;
+  color: #fff;
+}
+
+/* Modal */
+#itemModal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+#itemModal form {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 1.2rem;
+  box-shadow: 0 8px 32px rgba(254,66,77,0.13);
+  min-width: 320px;
+  max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+}
+
+#itemModal label {
+  font-weight: 500;
+  color: var(--primary-dark);
+  font-size: 1rem;
+}
+
+#itemModal input, #itemModal textarea {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #eee;
+  font-size: 1rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  background: #fff8f0;
+  color: var(--primary-dark);
+  transition: border 0.2s;
+}
+
+#itemModal input:focus, #itemModal textarea:focus {
+  border: 1.5px solid var(--primary);
+  outline: none;
+}
+
+#itemModal button[type="submit"] {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+#itemModal button[type="submit"]:hover {
+  background: var(--accent);
+  color: var(--primary-dark);
+}
+
+#itemModal button[type="button"] {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--primary);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+#itemModal button[type="button"]:hover {
+  color: #fe424d;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .planner-container {
+    flex-direction: column;
+    min-width: 0;
+  }
+  .trip-sidebar {
+    max-width: 100vw;
+    min-width: 0;
+    border-right: none;
+    border-bottom: 2px solid #ffe0e0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+  }
+  .main-content {
+    padding: 1.5rem 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .planner-container {
+    margin: 0.5rem;
+    border-radius: 0.7rem;
+  }
+  .trip-sidebar {
+    padding: 1rem 0.5rem;
+    font-size: 0.95rem;
+  }
+  .main-content {
+    padding: 1rem 0.5rem;
+  }
+  .itinerary-card {
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 1rem 0.7rem;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #ff6b81;
+    --primary-dark: #fff;
+    --accent: #ffe066;
+    --background: #181a1b;
+    --sidebar-bg: linear-gradient(135deg, #232526 60%, #2d2d2d 100%);
+    --card-bg: #232526;
+    --card-shadow: 0 8px 32px rgba(255, 107, 129, 0.13);
+    --border-radius: 1.2rem;
+    --text-dark: #fff;
+    --text-light: #232526;
+    --muted: #bdbdbd;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--text-dark);
+  }
+
+  .planner-container,
+  .main-content,
+  .trip-sidebar {
+    background: var(--card-bg);
+    color: var(--text-dark);
+  }
+
+  .trip-sidebar {
+    border-right: 2px solid #333;
+  }
+
+  .day-tab {
+    background: #232526;
+    color: #fff;
+  }
+  .day-tab.active, .day-tab:hover {
+    background: #2d2d2d;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+  }
+
+  .day-summary, .trip-summary {
+    background: #232526;
+    color: #ffe066;
+    box-shadow: 0 2px 8px #ffe06622;
+  }
+
+  .add-day-btn {
+    background: var(--primary);
+    color: #232526;
+  }
+  .add-day-btn:hover, .add-day-btn:focus {
+    background: var(--accent);
+    color: #232526;
+  }
+
+  .itinerary-header h2,
+  .itinerary-header .desc {
+    color: #fff;
+  }
+
+  .itinerary-card {
+    background: #232526;
+    color: #fff;
+    border-left: 6px solid var(--primary);
+    box-shadow: 0 2px 12px #ffe06633;
+  }
+  .itinerary-card:hover {
+    box-shadow: 0 6px 24px #ff6b8122;
+    border-left: 6px solid var(--accent);
+  }
+
+  .itinerary-icon {
+    color: var(--primary);
+  }
+
+  .itinerary-title {
+    color: #fff;
+  }
+  .itinerary-title .star {
+    color: var(--accent);
+  }
+
+  .itinerary-location {
+    color: var(--primary);
+  }
+
+  .itinerary-desc {
+    color: #eee;
+  }
+
+  .meta-badge {
+    background: #232526;
+    color: #ffe066;
+  }
+  .meta-badge.price {
+    background: #2d2d2d;
+    color: var(--primary);
+  }
+
+  .edit-btn, .save-btn {
+    background: #232526;
+    color: var(--primary);
+    border: 1.5px solid var(--primary);
+  }
+  .edit-btn:hover, .save-btn:hover {
+    background: var(--primary);
+    color: #232526;
+  }
+
+  .delete-btn {
+    background: #232526;
+    color: #ff6b81;
+    border: 1.5px solid #ff6b81;
+  }
+  .delete-btn:hover {
+    background: #ff6b81;
+    color: #232526;
+  }
+
+  #itemModal form {
+    background: #181a1b;
+    color: #f5f1f1;
+  }
+  #itemModal label {
+    color: #ffe066;
+  }
+  #itemModal input, #itemModal textarea {
+    background: #232526;
+    color: #fff;
+    border: 1px solid #444;
+  }
+  #itemModal input:focus, #itemModal textarea:focus {
+    border: 1.5px solid var(--primary);
+  }
+  #itemModal button[type="submit"] {
+    background: var(--primary);
+    color: #232526;
+  }
+  #itemModal button[type="submit"]:hover {
+    background: var(--accent);
+    color: #232526;
+  }
+  #itemModal button[type="button"] {
+    color: var(--primary);
+  }
+  #itemModal button[type="button"]:hover {
+    color: #ff6b81;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .itinerary-icon,
+  .itinerary-location i,
+  .itinerary-title .star i,
+  .meta-badge i,
+  .itinerary-meta i,
+  .edit-btn i,
+  .save-btn i,
+  .delete-btn i {
+    color: #ffe066 !important; /* Accent yellow for visibility */
+  }
+  .itinerary-title .star i {
+    color: #a24945 !important;
+  }
+  .meta-badge i {
+    color: #ffe066 !important;
+  }
+  .delete-btn i,
+  .edit-btn i,
+  .save-btn i {
+    color: #ff6b81 !important;
+  }
+}
+</style>
+<%- include('../includes/footer') %>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>YatraVue | Your Next Journey, Optimized</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <style>
+    body {
+      background: linear-gradient(120deg, #e5adad 0%, #fff 100%);
+      font-family: 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      color: #232526;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .landing-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 90vh;
+      width: 100%;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 2.5rem;
+      user-select: none;
+    }
+    .logo-gradient-box {
+      width: 54px;
+      height: 54px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #fe424d 0%, #d86783 60%, #ffd166 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px 0 rgba(254,66,77,0.18), 0 1.5px 8px 0 rgba(216,103,131,0.12);
+      position: relative;
+      margin-right: 0.2rem;
+    }
+    .logo-gradient-box .position-absolute {
+      position: absolute;
+      pointer-events: none;
+    }
+    .logo-gradient-box .position-absolute:first-child {
+      top: 0.5rem; left: 0.5rem; width: 0.7rem; height: 0.7rem; background: rgba(255,255,255,0.4); border-radius: 50%;
+    }
+    .logo-gradient-box .position-absolute:last-child {
+      bottom: 0.5rem; right: 0.5rem; width: 0.5rem; height: 0.5rem; background: rgba(255,255,255,0.3); border-radius: 50%;
+    }
+    .logo-gradient-box span, .logo-gradient-box i {
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.6rem;
+      letter-spacing: -1px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.18);
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      z-index: 1;
+      position: relative;
+    }
+    .brand-logo span {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #0f0f0e;
+      font-family: 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 8px #ffd16633;
+    }
+    .main-title {
+      font-size: 3.2rem;
+      font-weight: 800;
+      text-align: center;
+      margin: 0 0 0.5rem 0;
+      color: #232526;
+      line-height: 1.1;
+      letter-spacing: -1px;
+      text-shadow: 0 2px 8px #ffd16622;
+    }
+    .main-title span {
+      color: #fe424d;
+      text-shadow: 0 2px 8px #ffd16655;
+    }
+    .main-subtitle {
+      font-size: 1.3rem;
+      color: #555;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2.5rem auto;
+      font-weight: 500;
+      line-height: 1.5;
+      text-shadow: 0 1px 4px #ffd16622;
+    }
+    .features-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+      margin-top: 1.5rem;
+    }
+    .feature-card {
+      background: #fff;
+      border-radius: 1.2rem;
+      box-shadow: 0 2px 16px 0 rgba(254,66,77,0.08);
+      padding: 1.5rem 1.3rem 1.2rem 1.3rem;
+      min-width: 220px;
+      max-width: 260px;
+      text-align: center;
+      border: 1.5px solid #ffd16644;
+      transition: box-shadow 0.2s, border 0.2s, transform 0.18s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .feature-card:hover {
+      box-shadow: 0 8px 32px 0 rgba(254,66,77,0.13);
+      border-color: #fe424d;
+      transform: translateY(-6px) scale(1.04);
+    }
+    .feature-icon {
+      font-size: 2.1rem;
+      background: linear-gradient(135deg, #ffd166 0%, #fe424d 100%);
+      color: #fff;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.5rem auto;
+      box-shadow: 0 2px 8px 0 rgba(254,66,77,0.10);
+    }
+    .feature-title {
+      font-weight: 700;
+      color: #fe424d;
+      font-size: 1.15rem;
+      margin-bottom: 0.2rem;
+    }
+    .feature-desc {
+      color: #232526;
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+    .cta-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #025c1a;
+      color: #fff;
+      border: 3px solid #025c1a;
+      border-radius: 2.5rem;
+      font-size: 1.3rem;
+      font-weight: 600;
+      padding: 1rem 2.5rem;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border 0.2s, transform 0.15s;
+      box-shadow: 0 2px 16px #ffd16622;
+      text-decoration: none;
+    }
+    .cta-btn i {
+      font-size: 1.3rem;
+    }
+    .cta-btn:hover {
+      background: #fff;
+      color: #025c1a;
+      border: 3px solid #ffd166;
+      transform: scale(1.04);
+    }
+    .footer-note {
+      margin-top: 3rem;
+      color: #888;
+      font-size: 1rem;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    @media (max-width: 900px) {
+      .features-row { flex-direction: column; gap: 1.2rem; }
+      .feature-card { max-width: 100%; min-width: 0; }
+    }
+    @media (max-width: 700px) {
+      .main-title { font-size: 2.1rem; }
+      .main-subtitle { font-size: 1rem; }
+      .cta-btn { font-size: 1rem; padding: 0.7rem 1.5rem; }
+      .brand-logo span { font-size: 1.2rem; }
+      .logo-gradient-box { width: 38px; height: 38px; }
+    }
+
+    .logo-gradient-box {
+  /* ...existing code... */
+  animation: floatYV 3s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes floatYV {
+  0% { transform: translateY(0) scale(1) rotate(-3deg);}
+  100% { transform: translateY(-18px) scale(1.06) rotate(3deg);}
+}
+.logo-gradient-box::after {
+  content: "";
+  position: absolute;
+  top: -18px; left: -18px; right: -18px; bottom: -18px;
+  border-radius: 30px;
+  background: radial-gradient(circle at 60% 40%, #ffd16688 0%, #fe424d33 80%, transparent 100%);
+  z-index: 0;
+  filter: blur(12px);
+  animation: glowPulse 3.5s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes glowPulse {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; filter: blur(24px);}
+} 
+.cta-btn:active {
+  transform: scale(0.97) translateY(2px);
+  box-shadow: 0 1px 4px #ffd16655;
+}
+
+  </style>
+</head>
+<body>
+  <div class="landing-container">
+    <button onclick="window.history.back()" class="back-btn" style="
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: #fff;
+  color: #fe424d;
+  border: 2px solid #ffd166;
+  border-radius: 2rem;
+  padding: 0.5rem 1.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px #ffd16633;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+  transition: background 0.18s, color 0.18s, border 0.18s;
+">
+  <i class="fa-solid fa-arrow-left"></i> Back
+</button>
+    <div class="brand-logo">
+      <div class="logo-gradient-box mx-auto mb-1 position-relative">
+        <div class="position-absolute"></div>
+        <div class="position-absolute"></div>
+        <span>YV</span>
+      </div>
+      <span>YatraVue</span>
+    </div>
+    <div class="main-title">
+      Travel That Feels Like You<br> <span>Every Trip, Thoughtfully Crafted</span>
+    </div>
+    <div class="main-subtitle">
+      Effortlessly plan trips that match your style.
+Perfect for discovering the best of India.<br>
+      one journey at a time.<br>
+      Designed for vacations, workations, and everyday adventures.<br>
+      <span style="color:#fe424d;font-weight:600;">Experience India like never before!</span>
+    </div>
+    <div class="features-row">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+        <div class="feature-title">Authentic Experiences</div>
+        <div class="feature-desc">Handpicked stays and activities that showcase India's rich culture and beauty.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="feature-title">Secure & Private</div>
+        <div class="feature-desc">Your data and plans are safe with us. Plan confidently and securely.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <div class="feature-title">Smart Planning</div>
+        <div class="feature-desc">AI-powered suggestions and easy drag-and-drop itinerary creation.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fa-solid fa-heart"></i></div>
+        <div class="feature-title">Personal Touch</div>
+        <div class="feature-desc">Customize every detail, save favorites, and share your trip with friends.</div>
+      </div>
+    </div>
+    <a href="/itinerary/comingsoon" class="cta-btn">
+      <i class="fa-solid fa-route"></i>
+      Plan Your Trip Now
+    </a>
+    <div class="footer-note">
+      <i class="fa-solid fa-location-dot" style="color:#0f0f0e;"></i>
+      Proudly made in India &mdash; YatraVue &copy; <span id="year"></span>
+    </div>
+  </div>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+  
+</body>
+</html>
