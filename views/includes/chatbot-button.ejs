@@ -53,7 +53,48 @@
       color-scheme: dark;
     }
   }
+  #itinerary-btn {
+  position: fixed;
+  left: 30px;
+  bottom: 110px; /* higher than chatbot */
+  z-index: 9999;
+  background: #ffd166;
+  color: #232526;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  font-size: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+#itinerary-btn:hover, #itinerary-btn:focus {
+  background: #fe424d;
+  color: #fff;
+  box-shadow: 0 4px 16px #fe424d55;
+  transform: scale(1.08);
+}
+@media (prefers-color-scheme: dark) {
+  #itinerary-btn {
+    background: #232526;
+    color: #ffd166;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+  }
+  #itinerary-btn:hover, #itinerary-btn:focus {
+    background: #ffd166;
+    color: #232526;
+  }
+}
 </style>
+<!-- Floating Itinerary Button -->
+<a href="/itinerary/landing" id="itinerary-btn" title="Open Itinerary">
+  <i class="fa-solid fa-suitcase-rolling"></i>
+</a>
 <button id="chatbot-btn" title="Chat with AI">
   <i class="fa-solid fa-robot"></i>
 </button>
@@ -67,3 +108,16 @@
     win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
   };
 </script>
+<!-- <script>
+  // currUser is set in res.locals by your app.js
+  const isLoggedIn = '<%= currUser ? "true" : "false" %>';
+
+  document.getElementById('itinerary-btn').onclick = function(e) {
+    e.preventDefault();
+    if (!isLoggedIn) {
+      window.location.href = '/login';
+    } else {
+      window.location.href = '/itinerary/landing';
+    }
+  };
+</script> -->

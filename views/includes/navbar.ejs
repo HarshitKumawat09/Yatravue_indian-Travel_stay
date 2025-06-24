@@ -60,11 +60,42 @@
 .brand-name:hover {
   color: #d86783;
 }
+.logo-gradient-box {
+  transition: transform 0.2s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+  cursor: pointer;
+}
+.logo-gradient-box:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 24px 0 rgba(254,66,77,0.18), 0 1.5px 8px 0 rgba(216,103,131,0.12);
+  z-index: 2;
+}
 </style>
 
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i><span class="brand-name pacifico-regular">YatraVue</span></a>
+      <!-- <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i><span class="brand-name pacifico-regular">YatraVue</span></a> -->
+      <!-- Use this for your logo in the navbar -->
+<a class="navbar-brand d-flex align-items-center" href="/listings">
+  <!-- <div class="logo-gradient-box position-relative me-2" style="width: 2.5rem; height: 2.5rem;">
+    
+    <div class="position-absolute top-0 start-0 w-100 h-100 rounded" style="background: linear-gradient(135deg, #fe424d 0%, #d86783 60%, #ffd166 100%);"></div>
+    
+    <div class="position-absolute top-0 start-0 w-100 h-100 rounded" style="background: linear-gradient(135deg, rgba(254,66,77,0.3) 0%, transparent 60%, rgba(216,103,131,0.3) 100%);"></div>
+   
+    <div class="position-absolute" style="top: 0.3rem; left: 0.3rem; width: 0.5rem; height: 0.5rem; background: rgba(255,255,255,0.4); border-radius: 50%;"></div>
+    <div class="position-absolute" style="bottom: 0.3rem; right: 0.3rem; width: 0.3rem; height: 0.3rem; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+    
+    <div class="position-relative d-flex align-items-center justify-content-center w-100 h-100" style="z-index: 1;">
+      <span class="text-white fw-bold" style="font-size: 1rem; letter-spacing: -1px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); font-family: system-ui, -apple-system, sans-serif;">YV</span>
+    </div>
+  </div> -->
+  <div class="logo-gradient-box mx-auto mb-1 position-relative" style="width:40px; height:40px; border-radius:16px; background: linear-gradient(135deg, #fe424d 0%, #d86783 60%, #ffd166 100%); display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 24px 0 rgba(254,66,77,0.18), 0 1.5px 8px 0 rgba(216,103,131,0.12);">
+  <div class="position-absolute" style="top: 0.3rem; left: 0.3rem; width: 0.5rem; height: 0.5rem; background: rgba(255,255,255,0.4); border-radius: 50%;"></div>
+  <div class="position-absolute" style="bottom: 0.3rem; right: 0.3rem; width: 0.3rem; height: 0.3rem; background: rgba(255,255,255,0.3); border-radius: 50%;"></div>
+  <span style="color:#fff; font-weight:900; font-size:1.3rem; letter-spacing:-1px; text-shadow:0 1px 2px rgba(0,0,0,0.3); font-family:system-ui, -apple-system, sans-serif; z-index:1;">YV</span>
+</div>
+  <span class="brand-name pacifico-regular">YatraVue</span>
+</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup">
         <span class="navbar-toggler-icon"></span>
       </button>

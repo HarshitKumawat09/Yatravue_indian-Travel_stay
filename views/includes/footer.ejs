@@ -1,3 +1,113 @@
+<style>
+  /* Use this CSS for your feature cards section */
+/* Update the colors to match your site's palette: 
+   - Orange: #fe424d (main accent)
+   - Yellow: #ffd166 (secondary accent)
+   - Light background: #fffbe6
+   - Dark mode: #232526, #18191a
+*/
+
+.feature-section {
+  background: transparent !important;
+}
+
+.feature-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #ff296dc8;
+  margin-bottom: 0.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.feature-subtitle {
+  text-align: center;
+  color: #d86783;
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  font-weight: 500;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #fff;
+  border: 1.5px solid #f48b8b;
+  border-radius: 1.2rem;
+  box-shadow: 0 2px 12px 0 rgba(254,66,77,0.06);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  text-align: center;
+  transition: 
+    box-shadow 0.3s cubic-bezier(.4,0,.2,1),
+    border-color 0.3s cubic-bezier(.4,0,.2,1),
+    transform 0.25s cubic-bezier(.4,0,.2,1),
+    background 0.3s cubic-bezier(.4,0,.2,1);
+  cursor: pointer;
+}
+
+.feature-card:hover {
+  box-shadow: 0 4px 24px 0 rgba(254,66,77,0.13);
+  border-color: #fe424d;
+  transform: translateY(-6px) scale(1.03);
+}
+
+.feature-icon {
+  background: linear-gradient(135deg, #ffd166 0%, #fe424d 100%);
+  color: #fff;
+  border-radius: 50%;
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 1rem auto;
+  box-shadow: 0 2px 8px 0 rgba(254,66,77,0.10);
+}
+.feature-card:hover .feature-icon {
+  filter: brightness(1.15) drop-shadow(0 2px 8px #ffd16688);
+  transform: scale(1.12) rotate(-6deg);
+  transition: 
+    filter 0.3s cubic-bezier(.4,0,.2,1),
+    transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+.feature-card-title {
+  font-weight: 700;
+  color: #fe424d;
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+.feature-card-desc {
+  color: #232526;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+@media (prefers-color-scheme: dark) {
+  
+  .feature-card {
+    background: #232526;
+    border: 1.5px solid #fe424d;
+    color: #cc3434;
+  }
+  .feature-card-title,
+  .feature-icon {
+    color: #ffd166;
+  }
+  .feature-card-desc {
+    color: #ffd166;
+    opacity: 0.85;
+  }
+}
+</style>
 <!-- <footer>
     <div class="f-info">
         <div class="f-info-socials">
@@ -16,7 +126,67 @@
     </div>
 </footer> -->
 <!-- Main Multi-Column Footer -->
+ <!-- Place this where you want the features section -->
+<div class="feature-section">
+  <div class="feature-title">Why Choose YatraVue?</div>
+  <div class="feature-subtitle">Everything you need for an authentic Indian travel experience</div>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-leaf"></i></div>
+      <div class="feature-card-title">Authentic Listings</div>
+      <div class="feature-card-desc">Curated stays showcasing India's rich cultural heritage and rural beauty</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <div class="feature-card-title">Secure Authentication</div>
+      <div class="feature-card-desc">Safe and personalized account management for seamless access</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-calendar-check"></i></div>
+      <div class="feature-card-title">Smart Reservations</div>
+      <div class="feature-card-desc">Streamlined booking with downloadable and printable receipts</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-route"></i></div>
+      <div class="feature-card-title">Itinerary Builder</div>
+      <div class="feature-card-desc">Create and customize travel plans with your favorite listings</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-users"></i></div>
+      <div class="feature-card-title">Community Reviews</div>
+      <div class="feature-card-desc">Trusted insights from fellow travelers about authentic experiences</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-comments"></i></div>
+      <div class="feature-card-title">AI Travel Assistant</div>
+      <div class="feature-card-desc">Personalized advice and booking assistance for Indian travelers</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-calculator"></i></div>
+      <div class="feature-card-title">Trip Calculator</div>
+      <div class="feature-card-desc">Accurate cost estimates to help budget your perfect journey</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon"><i class="fa-solid fa-award"></i></div>
+      <div class="feature-card-title">Loyalty Rewards</div>
+      <div class="feature-card-desc">Earn points for bookings and engagement, redeemable for benefits</div>
+    </div>
+  </div>
+</div>
+
 <footer class="main-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="footer-logo" style="background: linear-gradient(135deg, #fe424d 0%, #d86783 60%, #ffd166 100%);">
+        <span>YV</span>
+      </div>
+      <div>
+        <span class="footer-brand-name">YatraVue</span>
+        <div class="footer-desc">
+          Discover authentic India through curated cultural experiences and heritage stays.
+        </div>
+      </div>
+    </div>
   <div class="footer-columns">
     <div class="footer-col">
       <h5>Support</h5>
@@ -52,7 +222,7 @@
       <i class="fa-brands fa-square-instagram"></i>
       <i class="fa-brands fa-linkedin"></i>
     </div>
-    <div class="f-info-brand">&copy; 2025 Yatravue Private Limited</div>
+    <div class="f-info-brand">&copy; 2025 Yatravue Private Limited All rights reserved. </div>
     <div class="f-info-links">
       <a href="/about">About Us</a>
       <a href="/support">Support</a>
@@ -146,6 +316,50 @@
   border-top: 1px solid #eee;
   padding: 2.5em 0 1.5em 0;
   margin-top: 2em;
+}
+.footer-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 3em;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+.footer-brand {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.2em;
+  min-width: 260px;
+  max-width: 340px;
+}
+.footer-logo {
+  width: 50px;
+  height: 38px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 1.3rem;
+  color: #fff;
+  margin-top: 0.2em;
+  margin-right: 0.5em;
+  box-shadow: 0 4px 24px 0 rgba(254,66,77,0.18);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+.footer-brand-name {
+  font-family: "Pacifico", cursive;
+  font-size: 1.3rem;
+  color: #fe424d;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.2em;
+}
+.footer-desc {
+  color: #666;
+  font-size: 1em;
+  margin-bottom: 0.5em;
 }
 .footer-columns {
   display: flex;
@@ -266,6 +480,9 @@
   }
   .f-info-socials i:hover {
     color: #fe424d !important;
+  }
+  .feature-section {
+    background: #18191a !important;
   }
 }
 </style>
