@@ -1,9 +1,128 @@
 <% layout("/layouts/boilerplate") %>
 <%= success  %>
 
-  <br/>
+  <!-- <br/> -->
     <!-- <h3>All Listings</h3> -->
+<style>
+.hero-bg {
+  min-height: 40vh; /* reduced from 70vh */
+  padding-top: 0; /* reduced from 3.5rem */
+  padding-bottom: 1.1rem; /* reduced from 3rem */
+  border-radius: 0 0 2.5rem 2.5rem;
+  background: linear-gradient(180deg, #fff6f6 0%, #fffbe6 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 8px 32px 0 rgba(254,66,77,0.07);
+  margin-top: 0;
+}
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fe424d;
+  margin-bottom: 1rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px rgba(254,66,77,0.08);
+}
+.hero-subtitle {
+  font-size: 1.4rem;
+  color: #d86783;
+  max-width: 700px;
+  margin: 0 auto 2.5rem auto;
+  font-weight: 500;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 1.2rem 2rem;
+  box-shadow: 0 2px 12px 0 rgba(254,66,77,0.04);
+  display: inline-block;
+}
+.hero-badges {
+  display: flex;
+  gap: 2.5rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+.hero-badge {
+  color: #ea580c;
+  background: #fffbe6;
+  font-size: 1.08rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 1.2rem;
+  padding: 0.6rem 1.3rem;
+  box-shadow: 0 2px 8px 0 rgba(254,66,77,0.06);
+  font-weight: 600;
+  border: 1.5px solid #ffd166;
+  transition: background 0.2s, color 0.2s;
+  cursor: pointer;
+}
+.hero-badge i {
+  color: #fe424d;
+  font-size: 1.1rem;
+}
+.hero-badge:hover {
+  background: linear-gradient(90deg, #ffd166 0%, #fe424d 100%);
+  color: #fff;
+}
+.hero-badge:hover i {
+  color: #fff;
+}
+@media (max-width: 700px) {
+  .hero-title { font-size: 2.1rem; }
+  .hero-subtitle { font-size: 1.1rem; padding: 1rem 1rem; }
+  .hero-badges { gap: 1.2rem; font-size: 0.98rem; }
+}
+@media (prefers-color-scheme: dark) {
+  .hero-bg {
+    background: linear-gradient(180deg, #18191a 0%, #232526 100%) !important;
+    box-shadow: 0 8px 32px 0 rgba(0,0,0,0.22);
+  }
+  .hero-title {
+    color: #ffd166 !important;
+    text-shadow: 0 2px 12px rgba(254,66,77,0.18);
+  }
+  .hero-subtitle {
+    background: rgba(24, 25, 26, 0.85) !important;
+    color: #ffd166 !important;
+    box-shadow: 0 2px 12px 0 rgba(254,66,77,0.10);
+  }
+  .hero-badge {
+    background: #232526 !important;
+    color: #ffd166 !important;
+    border: 1.5px solid #fe424d !important;
+    box-shadow: 0 2px 8px 0 rgba(254,66,77,0.13);
+    transition: background 0.2s, color 0.2s;
+  }
+  .hero-badge:hover {
+    background: linear-gradient(90deg, #fe424d 0%, #ffd166 100%) !important;
+    color: #232526 !important;
+  }
+  .hero-badge:hover i {
+    color: #cb1111 !important;
+  }
+  .hero-badge i {
+    color: #fe424d !important;
+  }
+}
+</style>
 
+<div class="hero-bg">
+  <div class="hero-title">Discover Authentic India</div>
+  <div class="hero-subtitle">
+    Experience India's rich cultural heritage through curated stays that showcase the true essence of our diverse traditions and rural beauty.
+  </div>
+  <div class="hero-badges">
+    <div class="hero-badge"><i class="fa-solid fa-camera"></i> 100+ Authentic Stays</div>
+    <div class="hero-badge"><i class="fa-solid fa-star"></i> 4.0 Average Rating</div>
+    <div class="hero-badge"><i class="fa-solid fa-globe"></i> 30+ Destinations</div>
+  </div>
+</div>
     <style>
       #filters {
         display: flex;
@@ -35,6 +154,7 @@
       }
 
     </style>
+    </br>
     <div id="filters">
     <div class="filter">
       <div><i class="fa-solid fa-fire"></i></div>
